@@ -26,76 +26,62 @@ Uso de plataformas como Google Earth Engine o QGIS para visualizar áreas de rie
 ## Manejo de Datos
 Estos son algunos codigos que nos podran ayudar con nuestro proyecto:
 
-from shapely.geometry import Point
+!pip install geopy matplotlib
+
+
+
 from geopy.distance import geodesic
-
-# Coordenadas del volcán de Colima
-volcan_coords = (19.514, -103.724)
-
-# Coordenadas de las zonas (Tonila y Quesería)
-tonila_coords = (19.256, -103.614)
-queseria_coords = (19.324, -103.563)
-
-# Crear los puntos
-volcan_point = Point(volcan_coords[1], volcan_coords[0])  # Longitud, Latitud
-tonila_point = Point(tonila_coords[1], tonila_coords[0])
-queseria_point = Point(queseria_coords[1], queseria_coords[0])
-
-# Calcular la distancia entre el volcán y las zonas
-distancia_tonila = geodesic(volcan_coords, tonila_coords).km
-distancia_queseria = geodesic(volcan_coords, queseria_coords).km
-
-# Imprimir los resultados
-print(f'Distancia entre el Volcán y Tonila: {distancia_tonila:.2f} km')
-print(f'Distancia entre el Volcán y Quesería: {distancia_queseria:.2f} km')
-
-ademas del siguiente:
-Este código carga un archivo shapefile que contiene las zonas geográficas de Tonila y Quesería y traza un mapa con la ubicación del volcán de Colima.
-import geopandas as gpd
 import matplotlib.pyplot as plt
 
-# Cargar los datos geoespaciales
-# Suponemos que tienes un archivo shapefile con las fronteras geográficas de Tonila y Quesería
-zona = gpd.read_file('zonas.shp')
+# Coordenadas del cráter del Volcán de Colima
+crater_coords = (19.514, -103.617)  # Latitud, Longitud
 
-# Mostrar el mapa con la ubicación de Tonila y Quesería
-fig, ax = plt.subplots(figsize=(10, 10))
-zona.plot(ax=ax, color='lightblue')
+# Definir niveles de riesgo según la distancia
+def calcular_riesgo(lat, lon):
+    distancia = geodesic(crater_coords, (lat, lon)).kilometers
+    if distancia < 10:
+        return "Alto"
+    elif distancia < 30:
+        return "Moderado"
+    else:
+        return "Bajo"
 
-# Agregar la ubicación del Volcán de Colima
-volcan = {'type': 'Point', 'coordinates': [-103.724, 19.514]}  # Coordenadas aproximadas
-gdf_volcan = gpd.GeoDataFrame([volcan], crs="EPSG:4326")
+# Ejemplo de puntos alrededor del volcán
+lugares = [
+    {"nombre": "Ciudad Guzmán", "coords": (19.703, -103.461)},
+    {"nombre": "Colima", "coords": (19.243, -103.725)},
+    {"nombre": "Quesería", "coords": (19.386533548675246, -103.57492819091863)},
+    {"nombre": "Tonila", "coords": (19.411082000407788, -103.5483929881344)},
+]
 
-# Plot
-gdf_volcan.plot(ax=ax, color='red', marker='o', markersize=100)
+# Evaluar riesgos para cada lugar
+for lugar in lugares:
+    riesgo = calcular_riesgo(*lugar["coords"])
+    lugar["riesgo"] = riesgo
+    print(f"{lugar['nombre']}: Riesgo {riesgo}")
 
-# Mostrar el mapa
-plt.title('Ubicación del Volcán de Colima y Zonas de Riesgo (Tonila y Quesería)')
+# Visualizar puntos y riesgos en un gráfico simple
+fig, ax = plt.subplots()
+for lugar in lugares:
+    lat, lon = lugar["coords"]
+    color = {"Alto": "red", "Moderado": "orange", "Bajo": "green"}[lugar["riesgo"]]
+    ax.scatter(lon, lat, c=color, label=lugar["nombre"])
+    ax.text(lon, lat, lugar["nombre"], fontsize=8)
+
+# Añadir el volcán al gráfico
+ax.scatter(crater_coords[1], crater_coords[0], c="black", label="Volcán de Colima")
+ax.text(crater_coords[1], crater_coords[0], "Volcán", fontsize=10, color="black")
+
+ax.set_title("Riesgos Volcánicos en el Volcán de Colima")
+ax.set_xlabel("Longitud")
+ax.set_ylabel("Latitud")
+plt.legend()
 plt.show()
 
 
 ## Resultados
 De acuerdo con los datos propuestos podemos obtener algunos resultados que nos seran muy utiles para nuestro proyecto como por ejemplo, saber la ubicacion entre cada unas de las comunidades como Tonila y Queseria respecto al volcan de Colima y de esta manera identificar su grado de vulnerabilidad ante un acontecimiento volcanico como lo es una erupcion volcanica o incluso la caida de ceniza que es un evento muy frecuente debido a la actividad volcanica de tal volcan. 
 De la misma manera con algunas librerias podemos obtener un mapa que nos permita tener un elemento visual que nos ayude a realizar esta analisis de vulnerabilidad, esto de acuerdo con el codigo que hayamos implementado para lograr tal fin.
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Parámetros de simulación (esto es un ejemplo básico)
-# Asumimos que el flujo del lahar sigue una forma simplificada
-# El volcán se encuentra en (0, 0) y se simula su propagación a través de un valle
-area = np.zeros((100, 100))  # Una malla de 100x100
-volcan_pos = (50, 50)  # Ubicación del volcán
-
-# Establecemos una simple simulación de propagación con caída de material
-for i in range(50, 100):  # Simulamos un flujo hacia abajo
-    for j in range(50, 100):
-        area[i, j] = np.exp(-((i - volcan_pos[0])**2 + (j - volcan_pos[1])**2)/100)  # Exponencial para simular la propagación
-
-# Mostrar el mapa del lahar simulado
-plt.imshow(area, cmap='hot', interpolation='nearest')
-plt.colorbar(label='Intensidad del lahar')
-plt.title('Simulación de Propagación del Lahar')
-plt.show()
 
 
 
