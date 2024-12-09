@@ -21,6 +21,9 @@ Principales objetivos
 Obtener datos geoespaciales de las zonas de Tonila y Quesería.
 Integrar datos sobre la actividad volcánica del Volcán de Colima (como erupciones pasadas, emisiones de ceniza, monitoreo sísmico, etc.).
 Desarrollar un modelo de vulnerabilidad basado en la ubicación geográfica de las comunidades, su infraestructura y la proximidad al volcán.
+De acuerdo con los datos propuestos podemos obtener algunos resultados que nos serán muy útiles para nuestro proyecto como, por ejemplo, saber la ubicación entre cada una de las comunidades como Tonila y Quesería respecto al volcán de Colima y de esta manera identificar su grado de vulnerabilidad ante un acontecimiento volcánico como lo es una erupción volcánica o incluso la caída de ceniza que es un evento muy frecuente debido a la actividad volcánica de tal volcán. 
+De la misma manera con algunas librerías podemos obtener un mapa que nos permita tener un elemento visual que nos ayude a realizar este análisis de vulnerabilidad, esto de acuerdo con el código que hayamos implementado para lograr tal fin.
+
  Metodología:
   Recopilación de Datos:
 Datos Geoespaciales:
@@ -82,6 +85,31 @@ ax.set_xlabel("Longitud")
 ax.set_ylabel("Latitud")
 plt.legend()
 plt.show()
+
+Un codigo mas que nos permite obtener la distancia que existe entre el volcan de Colima y cada una de las localides en cuestion de analisis, aunque este programa no nos arroja un resultado visual nos permite tener un dato certero y a su vez poder utilizarlo para calcular algunas distancias que sean requeridas teniendo como referencias esta comunidades.
+from shapely.geometry import Point
+from geopy.distance import geodesic
+
+# Coordenadas del volcán de Colima
+volcan_coords = (19.514, -103.724)
+
+# Coordenadas de las zonas (Tonila y Quesería)
+tonila_coords = (19.256, -103.614)
+queseria_coords = (19.324, -103.563)
+
+# Crear los puntos
+volcan_point = Point(volcan_coords[1], volcan_coords[0])  # Longitud, Latitud
+tonila_point = Point(tonila_coords[1], tonila_coords[0])
+queseria_point = Point(queseria_coords[1], queseria_coords[0])
+
+# Calcular la distancia entre el volcán y las zonas
+distancia_tonila = geodesic(volcan_coords, tonila_coords).km
+distancia_queseria = geodesic(volcan_coords, queseria_coords).km
+
+# Imprimir los resultados
+print(f'Distancia entre el Volcán y Tonila: {distancia_tonila:.2f} km')
+print(f'Distancia entre el Volcán y Quesería: {distancia_queseria:.2f} km')
+
 
 
 ## Resultados
