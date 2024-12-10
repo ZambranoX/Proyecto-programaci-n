@@ -23,6 +23,10 @@ Integrar datos sobre la actividad volcánica del Volcán de Colima (como erupcio
 Desarrollar un modelo de vulnerabilidad basado en la ubicación geográfica de las comunidades, su infraestructura y la proximidad al volcán.
 De acuerdo con los datos propuestos podemos obtener algunos resultados que nos serán muy útiles para nuestro proyecto como, por ejemplo, saber la ubicación entre cada una de las comunidades como Tonila y Quesería respecto al volcán de Colima y de esta manera identificar su grado de vulnerabilidad ante un acontecimiento volcánico como lo es una erupción volcánica o incluso la caída de ceniza que es un evento muy frecuente debido a la actividad volcánica de tal volcán. 
 De la misma manera con algunas librerías podemos obtener un mapa que nos permita tener un elemento visual que nos ayude a realizar este análisis de vulnerabilidad, esto de acuerdo con el código que hayamos implementado para lograr tal fin.
+De acuerdo con le información anterior podemos decir que aplicar la programación en un proyecto innovador implica una gama muy amplia de posibilidades a desarrollar por lo tanto es necesario centrar nuestra atención en algo que nos competa de acuerdo con el marco teórico de nuestro proyecto, es decir que teniendo en cuenta la información obtenida de nuestra investigación, debemos analizar y definir cual de estas herramientas tecnológicas vamos a implementar y cuales son los beneficios que nos proporcionara los resultados que obtengamos.
+Pues bien nuestro código mejorado nos arrojara un mapa interactivo realizado mediante la librería Follium, esto de acuerdo a las coordenadas obtenidas de cada uno de los lugares que nos interesa analizar, tal como lo son las poblaciones de Tonila y Quesería respecto a la cercanía del Volcán de Colima.
+
+
 
  Metodología:
   Recopilación de Datos:
