@@ -121,4 +121,22 @@ De la misma manera con algunas librerias podemos obtener un mapa que nos permita
 ## Conclusiones
 Los codigos que implementamos son algunas herramientas que nos ayudaron con el procesamiento de datos espaciales, y con ello realizar un analisis mas completo para la realizacion de nuestro proyecto. Esto codigos lo modificamos de acuerdo a nuestro objetivo y nuestro proyecto con la finalidad de elaborar un analisis mas exhaustivo respto a la actividad volcanica del Volcan de Colima especialmente en las zonas geograficas de Tonila y Quesería.
 Sin duda alguna este proyecto nos permitira tener informacion confiable y accessibles para poder afrentar un acontecimiento volcanico, ademas contribuira a las autoridades a la toma de decisiones en situaciones de emergencia de manera preventiva.
+Código Mejorado
+
+Código para mostrar en mapa interactivo comunidades aledañas al volcán 
+import folium
+from IPython.display import display
+
+# Crear un mapa centrado en el Volcán de Colima
+mapa = folium.Map(location=[19.514, -103.724], zoom_start=10)
+
+# Agregar marcadores para las zonas de riesgo
+folium.Marker([19.40979, -103.55071], popup='Tonila').add_to(mapa)
+folium.Marker([19.38756, -103.57219], popup='Quesería').add_to(mapa)
+folium.Marker([19.37504, -103.71179], popup='Suchitlan').add_to(mapa)
+folium.Marker([19.51239, -103.61686], popup='Volcán de Colima', icon=folium.Icon(color='red')).add_to(mapa)
+
+# Mostrar el mapa 
+display(mapa) 
+
 
